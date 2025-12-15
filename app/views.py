@@ -20,7 +20,7 @@ def login():
             erro =  "Senha incorreta"
         else:
             session["usuario_id"] = usuario_ja_existe.id
-            return redirect(url_for("views.menu"))
+            return redirect(url_for("views.jogo"))
     
     return render_template("login.html", erro=erro)
 
@@ -38,7 +38,8 @@ def cadastro():
 
         novo_usuario = Usuario (
             nome= nome,
-            senha= senha_segura
+            senha= senha_segura,
+            dinheiro = 0
         )
 
         db.session.add(novo_usuario)
@@ -46,14 +47,14 @@ def cadastro():
 
         session["usuario_id"] = novo_usuario.id
 
-        return redirect(url_for('views.menu'))
+        return redirect(url_for('views.jogo'))
 
     return render_template("cadastro.html")
 
 @views_bp.route("/menu", methods=['GET'])
-def menu():
+def jogo():
     if "usuario_id" not in session:
         return redirect(url_for("views.cadastro"))
     
     usuario_atual = Usuario.query.get(session["usuario_id"])
-    return render_template("menu.html", nome=usuario_atual.nome)
+    return render_template("jogo.html", nome=usuario_atual.nome, dinheiro=usuario_atual.dinheiro)

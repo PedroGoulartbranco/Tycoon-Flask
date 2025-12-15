@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Clicker</title>
+    <link rel="stylesheet" href="../static/css/jogo.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Jogo Clicker</h1>
+
+    <h2>Olá- {{ nome }}</h2>
+    <h2>Dinheiro: {{ dinheiro }}</h2>
+
+    <div>
+        <img src="../static/img/moeda.png" alt="" id="moeda_clicavel">
+    </div>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>
