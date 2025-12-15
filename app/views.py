@@ -5,9 +5,27 @@ from . import db
 
 views_bp = Blueprint("views", __name__)
 
+@views_bp.route("/login", methods=['GET', 'POST'])
+def login():
+    erro = None
+    
+    if request.method == 'POST':
+        nome = request.form['nome']
+        senha = request.form['senha']
+
+        usuario_ja_existe = Usuario.query.filter_by(nome=nome).first()
+        if not usuario_ja_existe:
+            erro = "Nome de usuario errado"
+        elif not check_password_hash(usuario_ja_existe.senha, senha):
+            erro =  "Senha incorreta"
+        else:
+            session["usuario_id"] = usuario_ja_existe.id
+            return redirect(url_for("views.menu"))
+    
+    return render_template("login.html", erro=erro)
 
 @views_bp.route("/", methods=['GET', 'POST'])
-def login():
+def cadastro():
     if request.method == 'POST':
         nome = request.form['nome']
         senha = request.form['senha']
@@ -30,12 +48,12 @@ def login():
 
         return redirect(url_for('views.menu'))
 
-    return render_template("login.html")
+    return render_template("cadastro.html")
 
 @views_bp.route("/menu", methods=['GET'])
 def menu():
     if "usuario_id" not in session:
-        return redirect(url_for("views.login"))
+        return redirect(url_for("views.cadastro"))
     
     usuario_atual = Usuario.query.get(session["usuario_id"])
     return render_template("menu.html", nome=usuario_atual.nome)
