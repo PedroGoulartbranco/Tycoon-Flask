@@ -5,7 +5,7 @@ from . import db
 
 views_bp = Blueprint("views", __name__)
 
-
+lista_preco_multiplicadores = [100, 200, 400, 600, 1000, 1300, 1900, 2300, 3000, 3500]
 
 @views_bp.route("/login", methods=['GET', 'POST'])
 def login():
@@ -133,5 +133,5 @@ def comprar_item(id_item):
 def ver_multiplicador():
     aumentar_clique = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=1).first()
     if aumentar_clique:
-        return jsonify({"multiplicador": aumentar_clique.quantidade})
-    return jsonify({"multiplicador": 0})
+        return jsonify({"multiplicador": aumentar_clique.quantidade, "preco": lista_preco_multiplicadores[aumentar_clique.quantidade - 1]})
+    return jsonify({"multiplicador": 0, "preco": lista_preco_multiplicadores[0]})

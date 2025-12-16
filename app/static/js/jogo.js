@@ -8,6 +8,7 @@ let botao_multiplicador = document.getElementById("botao_multiplicador")
 let mostrar_multiplicador = document.getElementById("mostrar_multiplicador")
 
 let multiplicador_cliques = 0
+let preco_multiplicador = 0
 
 function atualizarTabela() {
     fetch('http://127.0.0.1:5000/top10')
@@ -78,7 +79,9 @@ function atualizar_preco_multiplicor() {
         .then(data => {
             //multiplicador_cliques += data.multiplicador
             multiplicador_cliques = data.multiplicador
+            preco_multiplicador = data.preco
             mostrar_multiplicador.innerHTML = `${multiplicador_cliques}x`
+            botao_multiplicador.innerHTML = `R$${preco_multiplicador}`
             if (multiplicador_cliques == 0) {
                 texto_multiplicador.innerHTML = `Click ${multiplicador_cliques + 2}x`
             } else {
