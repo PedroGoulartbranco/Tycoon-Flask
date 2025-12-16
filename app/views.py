@@ -101,24 +101,28 @@ def comprar_item(id_item):
     usuario = Usuario.query.filter_by(id=session['usuario_id']).first()
     item = Itens.query.get(id_item)
 
-    if usuario.dinheiro < item.preco:
-        return jsonify({"sucesso": False, "erro": "Dinheiro insuficiente"})
-    
-    usuario.dinheiro -= item.preco
-
     if item.id_item == 1: #Caso for um multiplicador
         jogador_tem_ou_nao_tem_multiplicador =  Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=1).first()
         if jogador_tem_ou_nao_tem_multiplicador:
-           jogador_tem_ou_nao_tem_multiplicador.quantidade += 1
+            if usuario.dinheiro < lista_preco_multiplicadores[jogador_tem_ou_nao_tem_multiplicador.quantidade - 1]:
+                return jsonify({"sucesso": False, "erro": "Dinheiro insuficiente"})
+            usuario.dinheiro -= lista_preco_multiplicadores[jogador_tem_ou_nao_tem_multiplicador.quantidade - 1]
+            jogador_tem_ou_nao_tem_multiplicador.quantidade += 1
         else:
+            if usuario.dinheiro < lista_preco_multiplicadores[0]:
+                return jsonify({"sucesso": False, "erro": "Dinheiro insuficiente"})
             item_comprado = Inventario (
             usuario_id = usuario.id,
             item_id = id_item,
             quantidade = 2
         )
+            usuario.dinheiro -= lista_preco_multiplicadores[0]
             db.session.add(item_comprado)
     else:
-
+        if usuario.dinheiro < item.preco:
+            return jsonify({"sucesso": False, "erro": "Dinheiro insuficiente"})
+    
+        usuario.dinheiro -= item.preco
         item_comprado = Inventario (
             usuario_id = usuario.id,
             item_id = id_item,

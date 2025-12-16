@@ -6,6 +6,7 @@ let mostrar_cliques = document.getElementById("mostrar_cliques")
 let texto_multiplicador = document.getElementById("texto_multiplicador")
 let botao_multiplicador = document.getElementById("botao_multiplicador")
 let mostrar_multiplicador = document.getElementById("mostrar_multiplicador")
+let mostrar_nivel_multiplicador = document.getElementById("mostrar_nivel_multiplicador")
 
 let multiplicador_cliques = 0
 let preco_multiplicador = 0
@@ -82,6 +83,7 @@ function atualizar_preco_multiplicor() {
             preco_multiplicador = data.preco
             mostrar_multiplicador.innerHTML = `${multiplicador_cliques}x`
             botao_multiplicador.innerHTML = `R$${preco_multiplicador}`
+            mostrar_nivel_multiplicador.innerHTML = `Multiplica o click <br>Nível: ${multiplicador_cliques}/10`
             if (multiplicador_cliques == 0) {
                 texto_multiplicador.innerHTML = `Click ${multiplicador_cliques + 2}x`
             } else {
