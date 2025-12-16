@@ -1,6 +1,7 @@
 const moeda = document.getElementById("moeda_clicavel")
 let mostrar_moedas = document.getElementById("mostrar_moedas")
 let paragrafo_10 = document.getElementById("top_10")
+let mostrar_cliques = document.getElementById("mostrar_cliques")
 
 function atualizarTabela() {
     fetch('http://127.0.0.1:5000/top10')
@@ -34,6 +35,7 @@ moeda.addEventListener("click", () => {
     
         .then(data => {
             mostrar_moedas.innerHTML = data.dinheiro
+            mostrar_cliques.innerHTML = data.cliques
             atualizarTabela()
         })
     

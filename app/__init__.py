@@ -14,12 +14,9 @@ def criar_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
+    migrate.init_app(app, db)
 
     from .views import views_bp
     app.register_blueprint(views_bp)
-
-    with app.app_context():
-        from . import models   
-        db.create_all()
 
     return app

@@ -39,7 +39,8 @@ def cadastro():
         novo_usuario = Usuario (
             nome= nome,
             senha= senha_segura,
-            dinheiro = 0
+            dinheiro = 0,
+            cliques = 0
         )
 
         db.session.add(novo_usuario)
@@ -57,7 +58,7 @@ def jogo():
         return redirect(url_for("views.cadastro"))
     
     usuario_atual = Usuario.query.get(session["usuario_id"])
-    return render_template("jogo.html", nome=usuario_atual.nome, dinheiro=usuario_atual.dinheiro)
+    return render_template("jogo.html", nome=usuario_atual.nome, dinheiro=usuario_atual.dinheiro, cliques=usuario_atual.cliques)
 
 @views_bp.route("/clique", methods=['POST'])
 def clique():
@@ -66,10 +67,11 @@ def clique():
     
     usuario_atual = Usuario.query.get(session["usuario_id"])
     usuario_atual.dinheiro += 1
+    usuario_atual.cliques += 1
 
     db.session.commit()
 
-    return jsonify({'dinheiro': usuario_atual.dinheiro})
+    return jsonify({'dinheiro': usuario_atual.dinheiro, 'cliques': usuario_atual.cliques})
 
 @views_bp.route("/top10", methods=['GET'])
 def top10():
