@@ -42,7 +42,21 @@ moeda.addEventListener("click", () => {
 })
 
 function botao_comprar(numero_botao) {
-    alert("oi")
+    fetch(`http://127.0.0.1:5000/comprar/${numero_botao}`, {
+    
+        method: 'POST',
+
+    
+    })
+    
+        .then(response => response.json())
+    
+        .then(data => {
+            console.log(data)
+            mostrar_moedas.innerHTML = data.novo_dinheiro
+        })
+    
+        .catch(error => console.log(error));
 }
 
 setInterval(atualizarTabela, 2000)

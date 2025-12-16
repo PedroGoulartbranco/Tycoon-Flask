@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash 
-from .models import Usuario
+from .models import Usuario, Itens, Inventario
 from . import db
 
 views_bp = Blueprint("views", __name__)
@@ -86,3 +86,23 @@ def top10():
         })
 
     return jsonify(ranking)
+
+@views_bp.route("/comprar/<int:id_item>", methods=['POST'])
+def comprar_item(id_item):
+    usuario = Usuario.query.filter_by(id=session['usuario_id']).first()
+    item = Itens.query.get(id_item)
+
+    if usuario.dinheiro < item.preco:
+        return jsonify({"sucesso": False, "erro": "Dinheiro insuficiente"})
+    
+    usuario.dinheiro -= item.preco
+
+    item_comprado = Inventario (
+        usuario_id = usuario.id,
+        item_id = id_item,
+        quantidade = 1
+    )
+
+    db.session.add(item_comprado)
+    db.session.commit()
+    return jsonify({"sucesso": True, "novo_dinheiro": usuario.dinheiro,"mensagem": f"Você comprou {item.nome}!"})
