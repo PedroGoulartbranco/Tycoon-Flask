@@ -5,6 +5,7 @@ let mostrar_cliques = document.getElementById("mostrar_cliques")
 
 let texto_multiplicador = document.getElementById("texto_multiplicador")
 let botao_multiplicador = document.getElementById("botao_multiplicador")
+let mostrar_multiplicador = document.getElementById("mostrar_multiplicador")
 
 let multiplicador_cliques = 0
 
@@ -75,10 +76,13 @@ function atualizar_preco_multiplicor() {
         .then(response => response.json())
     
         .then(data => {
-            multiplicador_cliques += data.multiplicador
+            //multiplicador_cliques += data.multiplicador
+            multiplicador_cliques = data.multiplicador
+            mostrar_multiplicador.innerHTML = `${multiplicador_cliques}x`
             if (multiplicador_cliques == 0) {
                 texto_multiplicador.innerHTML = `Click ${multiplicador_cliques + 2}x`
             } else {
+                alert(multiplicador_cliques)
                 texto_multiplicador.innerHTML = `Click ${multiplicador_cliques + 1}x`
             }
             
@@ -86,6 +90,8 @@ function atualizar_preco_multiplicor() {
     
         .catch(error => console.log(error));
 }
+
+console.log(multiplicador_cliques)
 
 atualizar_preco_multiplicor()
 
