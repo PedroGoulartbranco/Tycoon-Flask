@@ -161,3 +161,6 @@ def comprar_clique_automatico():
             item_id = 2,
             quantidade = 1
         )
+        db.session.add(automatico_comprado)
+    db.session.commit()
+    return jsonify({"sucesso": True, "novo_dinheiro": usuario.dinheiro,"mensagem": f"Você comprou {item.nome}!"})

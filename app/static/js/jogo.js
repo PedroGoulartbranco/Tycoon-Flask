@@ -96,7 +96,19 @@ function atualizar_preco_multiplicor() {
 }
 
 function botao_comprar_automatico() {
+    fetch('http://127.0.0.1:5000/comprar_clique_automatico', {
     
+        method: 'POST'
+    
+    })
+    
+        .then(response => response.json())
+    
+        .then(data => {
+            mostrar_moedas.innerHTML = data.novo_dinheiro
+        })
+    
+        .catch(error => console.log(error));
 }
 
 atualizar_preco_multiplicor()
