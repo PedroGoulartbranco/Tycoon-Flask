@@ -9,6 +9,7 @@ views_bp = Blueprint("views", __name__)
 
 lista_preco_multiplicadores = [100, 200, 400, 600, 1000, 1300, 1900, 2300, 3000, 3500]
 lista_preco_clique_automaticos_1 = [150, 300, 400, 520, 600, 780, 1000, 1200, 1500, 2000]
+lista_tempo_off = [3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 32400, 36000]
 
 @views_bp.route("/login", methods=['GET', 'POST'])
 def login():
@@ -45,7 +46,8 @@ def cadastro():
             nome= nome,
             senha= senha_segura,
             dinheiro = 0,
-            cliques = 0
+            cliques = 0,
+            limite_off = 0
         )
 
         db.session.add(novo_usuario)
@@ -186,3 +188,26 @@ def ver_automaticos_1():
     if numero_de_automaticos:
         return jsonify({"numero_automatico": numero_de_automaticos.quantidade, "preco": lista_preco_clique_automaticos_1[numero_de_automaticos.quantidade]})
     return jsonify({"numero_automatico": 0, "preco": lista_preco_clique_automaticos_1[0]})
+
+@views_bp.route("/atualizar_dinheiro", methods=['GET'])
+def atualizar_dinheiro():
+    usuario_atual = Usuario.query.get(session["usuario_id"])
+
+    horario_atual = datetime.now(timezone.utc)
+    segundos_passados = (horario_atual - usuario_atual.ultima_atualizacao.replace(tzinfo=timezone.utc)).total_seconds()
+    quantidade_de_cliques_automaticos = 0
+
+    clique_automatico_1 = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=2).first()
+    if clique_automatico_1:
+        quantidade_de_cliques_automaticos = clique_automatico_1.quantidade
+    else:
+        quantidade_de_cliques_automaticos = 0
+    dinheiro_ganho_passivo = segundos_passados * quantidade_de_cliques_automaticos
+    dinheiro_ganho_passivo = floor(dinheiro_ganho_passivo)
+
+    usuario_atual.dinheiro += dinheiro_ganho_passivo
+    usuario_atual.ultima_atualizacao = horario_atual
+
+    db.session.commit()
+
+    return jsonify({"dinheiro": usuario_atual.dinheiro})

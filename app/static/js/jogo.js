@@ -68,7 +68,7 @@ function botao_comprar(numero_botao) {
         .then(response => response.json())
     
         .then(data => {
-            console.log(data)
+            atualizar_dinheiro()
             if (data.sucesso == true) {
                 mostrar_moedas.innerHTML = data.novo_dinheiro
                 atualizar_preco_multiplicor()
@@ -113,6 +113,7 @@ function botao_comprar_automatico() {
         .then(response => response.json())
     
         .then(data => {
+            atualizar_dinheiro()
             if (data.sucesso == true) {
                 mostrar_moedas.innerHTML = data.novo_dinheiro
                 atualizar_preco_do_automatico()
@@ -149,11 +150,23 @@ setInterval(() => {
     }
 }, 1000)
 
-setInterval(() => {
+function atualizar_dinheiro() {
+    fetch('http://127.0.0.1:5000/atualizar_dinheiro')
+    
+        .then(response => response.json())
+    
+        .then(data => {
+            mostrar_moedas.innerHTML = data.dinheiro
+            console.log("atualizou")
+        })
+    
+        .catch(error => console.log(error));
+}
 
-}, 20000)
+setInterval(atualizar_dinheiro, 20000)
 
 atualizar_preco_do_automatico()
+atualizar_dinheiro()
 
 atualizar_preco_multiplicor()
 

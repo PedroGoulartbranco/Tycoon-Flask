@@ -8,6 +8,7 @@ class Usuario(db.Model):
     dinheiro = db.Column(db.Integer, nullable=False)
     cliques = db.Column(db.Integer, default=0)
     ultima_atualizacao = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    limite_off = db.Column(db.Integer, nullable=False)
 
 class Itens(db.Model):
     id_item = db.Column(db.Integer, primary_key=True)
