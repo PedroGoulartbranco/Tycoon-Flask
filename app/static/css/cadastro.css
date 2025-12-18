@@ -12,10 +12,24 @@ body {
 }
 
 #form {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.418);
     border-radius: 20px;
     padding: 30px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     width: 90%;
     max-width: 400px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.subtitulo-form {
+    text-align: center;
+    font-size: 4vh;
+}
+
+.botao {
+    width: 100%;
+    margin-bottom: 10px;
 }
