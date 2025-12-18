@@ -1,8 +1,8 @@
-"""Reset inicial com limite_off
+"""novo
 
-Revision ID: 6ad7a4e87922
+Revision ID: 7c8aaace30ae
 Revises: 
-Create Date: 2025-12-18 10:18:31.346449
+Create Date: 2025-12-18 15:50:15.355818
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6ad7a4e87922'
+revision = '7c8aaace30ae'
 down_revision = None
 branch_labels = None
 depends_on = None

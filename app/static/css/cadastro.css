@@ -1,0 +1,21 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url("/static/img/fundo_cadastro.jpg");
+
+    min-height: 100vh;         
+    margin: 0;               
+    background-size: cover;    
+    background-position: center; 
+}
+
+#form {
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 400px;
+}
