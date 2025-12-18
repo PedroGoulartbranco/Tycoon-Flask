@@ -172,7 +172,9 @@ function atualizar_dinheiro() {
     
         .then(data => {
             mostrar_moedas.innerHTML = data.dinheiro
-            console.log("atualizou")
+            if (data.tempo_off >= 1) {
+                alert(`Você ficou ${data.tempo_off} fora, você ganhou ${data.dinheiro}`)
+            } 
         })
     
         .catch(error => console.log(error));

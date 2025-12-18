@@ -7,8 +7,7 @@ from math import floor
 
 views_bp = Blueprint("views", __name__)
 lista_preco_multiplicadores = [100, 200, 400, 600, 1000, 1300, 1900, 2300, 3000, 3500]
-lista_preco_clique_automaticos_1 = [15, 30, 40, 50, 6, 7, 10, 10, 10, 20]
-#lista_preco_clique_automaticos_1 = [150, 300, 400, 520, 600, 780, 1000, 1200, 1500, 2000]
+lista_preco_clique_automaticos_1 = [150, 300, 400, 520, 600, 780, 1000, 1200, 1500, 2000]
 lista_tempo_off = [3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 32400, 36000]
 
 @views_bp.route("/login", methods=['GET', 'POST'])
@@ -202,6 +201,7 @@ def atualizar_dinheiro():
     quantidade_de_cliques_automaticos = 0
 
     clique_automatico_1 = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=2).first()
+    limite_off_usuario = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=2).first()
     if clique_automatico_1:
         quantidade_de_cliques_automaticos = clique_automatico_1.quantidade
     else:
@@ -217,4 +217,4 @@ def atualizar_dinheiro():
 
     db.session.commit()
 
-    return jsonify({"dinheiro": usuario_atual.dinheiro})
+    return jsonify({"dinheiro": usuario_atual.dinheiro, "tempo_off": floor(segundos_passados / 3600), "limite_off": limite_off_usuario.quantidade, "dinheiro_off": dinheiro_ganho_passivo})
