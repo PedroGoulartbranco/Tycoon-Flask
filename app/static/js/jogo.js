@@ -40,7 +40,7 @@ function atualizarTabela() {
 }
 
 
-moeda.addEventListener("click", () => {
+moeda.addEventListener("click", (evento) => {
     fetch('http://127.0.0.1:5000/clique', {
     
         method: 'POST'
@@ -52,6 +52,20 @@ moeda.addEventListener("click", () => {
         .then(data => {
             mostrar_moedas.innerHTML = data.dinheiro
             mostrar_cliques.innerHTML = data.cliques
+
+            mostrar_numerozinho = document.createElement("div")
+            mostrar_numerozinho.className = "numero-flutuante"
+            mostrar_numerozinho.innerHTML = `+${data.valor_clique}`
+
+            mostrar_numerozinho.style.left = `${evento.pageX - 10}px`
+            mostrar_numerozinho.style.top = `${evento.pageY - 10}px`
+
+            document.body.appendChild(mostrar_numerozinho)
+
+            setTimeout(() => {
+                mostrar_numerozinho.remove();
+            }, 800);
+
             atualizarTabela()
         })
     

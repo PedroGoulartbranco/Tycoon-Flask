@@ -5,9 +5,10 @@ from . import db
 from datetime import datetime, timezone
 from math import floor
 
+
 views_bp = Blueprint("views", __name__)
-lista_preco_multiplicadores = [100, 200, 400, 600, 1000, 1300, 1900, 2300, 3000, 3500]
-lista_preco_clique_automaticos_1 = [150, 300, 400, 520, 600, 780, 1000, 1200, 1500, 2000]
+lista_preco_multiplicadores = [50, 200, 400, 600, 1000, 1300, 1900, 2300, 3000, 3500]
+lista_preco_clique_automaticos_1 = [150, 300, 500, 720, 800, 1000, 1300, 2000, 3000, 3000]
 lista_tempo_off = [3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 32400, 36000]
 
 @views_bp.route("/login", methods=['GET', 'POST'])
@@ -97,7 +98,7 @@ def clique():
 
     db.session.commit()
 
-    return jsonify({'dinheiro': usuario_atual.dinheiro, 'cliques': usuario_atual.cliques})
+    return jsonify({'dinheiro': usuario_atual.dinheiro, 'cliques': usuario_atual.cliques, 'valor_clique': valor_por_clique})
 
 @views_bp.route("/top10", methods=['GET'])
 def top10():
@@ -218,3 +219,5 @@ def atualizar_dinheiro():
     db.session.commit()
 
     return jsonify({"dinheiro": usuario_atual.dinheiro, "tempo_off": floor(segundos_passados / 3600), "limite_off": limite_off_usuario.quantidade, "dinheiro_off": dinheiro_ganho_passivo})
+
+

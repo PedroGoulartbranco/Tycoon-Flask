@@ -55,3 +55,31 @@ h1 {
     align-items: stretch;
     height: 100vh;
 }
+
+/*Animação feita com gemini mas entendi tudo, não sabia nem por onde começar a fazer isso */
+.numero-flutuante {
+    position: absolute;
+    
+    color: #0c0c0c; 
+    font-weight: bold;
+    font-size: 20px;
+    
+    pointer-events: none; 
+
+    user-select: none;
+    
+    animation: subirESumir 1s ease-out forwards;
+    
+    z-index: 1000;
+}
+
+@keyframes subirESumir {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
