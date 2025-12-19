@@ -66,8 +66,10 @@ h1 {
     
     pointer-events: none; 
 
-    user-select: none;
-    
+    /* 2. Impede que o número fique "azul" ou selecionado se o jogador clicar muito rápido na tela */
+    user-select: none; 
+
+    /* 3. Aplica a animação: Nome da animação | Duração (1 segundo) | Começa rápido e termina suave | Para no final (não reseta) */
     animation: subirESumir 1s ease-out forwards;
     
     z-index: 1000;
