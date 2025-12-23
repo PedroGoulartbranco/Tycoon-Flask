@@ -78,7 +78,7 @@ def clique():
 
     aumentar_clique = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=1).first()
     if aumentar_clique:
-        valor_por_clique = aumentar_clique.quantidade
+        valor_por_clique += aumentar_clique.quantidade
 
     horario_atual = datetime.now(timezone.utc)
     segundos_passados = (horario_atual - usuario_atual.ultima_atualizacao.replace(tzinfo=timezone.utc)).total_seconds()
@@ -157,7 +157,7 @@ def comprar_item(id_item):
 def ver_multiplicador():
     aumentar_clique = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=1).first()
     if aumentar_clique:
-        return jsonify({"multiplicador": aumentar_clique.quantidade, "preco": lista_preco_multiplicadores[aumentar_clique.quantidade - 1]})
+        return jsonify({"multiplicador": aumentar_clique.quantidade, "preco": lista_preco_multiplicadores[aumentar_clique.quantidade]})
     return jsonify({"multiplicador": 0, "preco": lista_preco_multiplicadores[0]})
 
 @views_bp.route("/comprar_clique_automatico", methods=['POST'])
@@ -205,10 +205,10 @@ def atualizar_dinheiro():
     limite_off_usuario = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=2).first()
     if clique_automatico_1:
         quantidade_de_cliques_automaticos = clique_automatico_1.quantidade
+        if segundos_passados > lista_tempo_off[limite_off_usuario - 1]: #Limita o tempo fora
+            segundos_passados = lista_tempo_off[limite_off_usuario - 1]
     else:
         quantidade_de_cliques_automaticos = 0
-    if segundos_passados > lista_tempo_off[usuario_atual.limite_off]: #Limita o tempo fora
-        segundos_passados = lista_tempo_off[usuario_atual.limite_off]
 
     dinheiro_ganho_passivo = segundos_passados * quantidade_de_cliques_automaticos
     dinheiro_ganho_passivo = floor(dinheiro_ganho_passivo)
