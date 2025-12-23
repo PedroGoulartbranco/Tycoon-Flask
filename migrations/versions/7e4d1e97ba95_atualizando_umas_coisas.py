@@ -1,8 +1,8 @@
-"""novo
+"""atualizando umas coisas
 
-Revision ID: 7c8aaace30ae
+Revision ID: 7e4d1e97ba95
 Revises: 
-Create Date: 2025-12-18 15:50:15.355818
+Create Date: 2025-12-23 19:26:25.892332
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7c8aaace30ae'
+revision = '7e4d1e97ba95'
 down_revision = None
 branch_labels = None
 depends_on = None

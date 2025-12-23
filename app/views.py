@@ -78,7 +78,7 @@ def clique():
 
     aumentar_clique = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=1).first()
     if aumentar_clique:
-        valor_por_clique += aumentar_clique.quantidade
+        valor_por_clique *= aumentar_clique.quantidade
 
     horario_atual = datetime.now(timezone.utc)
     segundos_passados = (horario_atual - usuario_atual.ultima_atualizacao.replace(tzinfo=timezone.utc)).total_seconds()
@@ -134,7 +134,7 @@ def comprar_item(id_item):
             item_comprado = Inventario (
             usuario_id = usuario.id,
             item_id = id_item,
-            quantidade = 1
+            quantidade = 2
         )
             usuario.dinheiro -= lista_preco_multiplicadores[0]
             db.session.add(item_comprado)
@@ -157,7 +157,9 @@ def comprar_item(id_item):
 def ver_multiplicador():
     aumentar_clique = Inventario.query.filter_by(usuario_id=session["usuario_id"], item_id=1).first()
     if aumentar_clique:
-        return jsonify({"multiplicador": aumentar_clique.quantidade, "preco": lista_preco_multiplicadores[aumentar_clique.quantidade]})
+        if aumentar_clique.quantidade == 1:
+            return jsonify({"multiplicador": aumentar_clique.quantidade, "preco": lista_preco_multiplicadores[aumentar_clique.quantidade]})
+        return jsonify({"multiplicador": aumentar_clique.quantidade, "preco": lista_preco_multiplicadores[aumentar_clique.quantidade - 1]})
     return jsonify({"multiplicador": 0, "preco": lista_preco_multiplicadores[0]})
 
 @views_bp.route("/comprar_clique_automatico", methods=['POST'])

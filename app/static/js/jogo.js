@@ -103,21 +103,21 @@ function atualizar_preco_multiplicor() {
             //multiplicador_cliques += data.multiplicador
             multiplicador_cliques = data.multiplicador
             preco_multiplicador = data.preco
-            mostrar_multiplicador.innerHTML = `${multiplicador_cliques + 1}x`
-            if (multiplicador_cliques == 10){
+            mostrar_multiplicador.innerHTML = `${multiplicador_cliques}x`
+            if (multiplicador_cliques >= 10){
                 botao_multiplicador.innerHTML = `Máximo`
                 botao_multiplicador.classList = 'btn btn-success'
             } else {
                 botao_multiplicador.innerHTML = `R$${preco_multiplicador}`
             }
-            mostrar_nivel_multiplicador.innerHTML = `Multiplica o click <br>Nível: ${multiplicador_cliques + 1}/10`
+            mostrar_nivel_multiplicador.innerHTML = `Multiplica o click <br>Nível: ${multiplicador_cliques}/10`
             if (multiplicador_cliques == 0) {
-                texto_multiplicador.innerHTML = `Click ${multiplicador_cliques + 2}x`
-            } else if (multiplicador_cliques == 10) {
+                texto_multiplicador.innerHTML = `Click ${multiplicador_cliques + 1}x`
+            } else if (multiplicador_cliques >= 10) {
                  texto_multiplicador.innerHTML = `Click 10x Máximo Alcançado`
             }
             else {
-                texto_multiplicador.innerHTML = `Click ${multiplicador_cliques + 2}x`
+                texto_multiplicador.innerHTML = `Click ${multiplicador_cliques + 1}x`
             }
             
         })
